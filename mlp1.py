@@ -51,8 +51,8 @@ def loss_and_gradients(x, y, params):
     Z_hid = np.dot(W.T, x) + b.reshape(-1, 1)          # [hid_dim, 1]
     V_hid = tanh(Z_hid)                                # [hid_dim, 1]
 
-    Z_out = np.dot(U.T, V_hid) + b_tag.reshape(-1, 1)  # [out_dim, 1]
-    V_out = softmax(Z_out)                             # [out_dim, 1]
+    # Z_out = np.dot(U.T, V_hid) + b_tag.reshape(-1, 1)  # [out_dim, 1]
+    # V_out = softmax(Z_out)                             # [out_dim, 1]
 
     E = probs                                          # [out_dim, 1]
     E[y] -= 1
