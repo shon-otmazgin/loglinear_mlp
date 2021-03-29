@@ -1,4 +1,4 @@
-import mlp1 as mlp1
+import mlp1
 import random
 import numpy as np
 
