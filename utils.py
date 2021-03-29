@@ -31,3 +31,6 @@ I2L = {i:l for l,i in L2I.items()}
 # feature strings (bigrams) to IDs
 F2I = {f:i for i,f in enumerate(list(sorted(vocab)))}
 
+import numpy as np
+x= np.zeros(3)
+print(x.shape[1])
