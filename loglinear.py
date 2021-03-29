@@ -24,8 +24,9 @@ def classifier_output(x, params):
     Return the output layer (class probabilities) 
     of a log-linear classifier with given params on input x.
     """
+    x = np.array(x)
+
     W,b = params
-    # x = np.array(x)
     probs = softmax(np.dot(W.T, x) + b)
     return probs
 
@@ -52,6 +53,8 @@ def loss_and_gradients(x, y, params):
     gW: matrix, gradients of W
     gb: vector, gradients of b
     """
+    x = np.array(x)
+
     W,b = params
 
     probs = classifier_output(x, params)
@@ -60,7 +63,7 @@ def loss_and_gradients(x, y, params):
     E = probs
     E[y] -= 1
 
-    gW = np.dot(E.reshape(-1,1), np.array(x).reshape(-1,1).T).T
+    gW = np.dot(E.reshape(-1,1), x.reshape(-1,1).T).T
     gb = E
 
     return loss,[gW,gb]
