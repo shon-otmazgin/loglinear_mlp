@@ -78,10 +78,15 @@ def create_classifier(in_dim, hid_dim, out_dim):
     return:
     a flat list of 4 elements, W, b, U, b_tag.
     """
-    W = np.zeros((in_dim, hid_dim))
-    b = np.zeros(hid_dim)
-    U = np.zeros((hid_dim, out_dim))
-    b_tag = np.zeros(out_dim)
+    x = np.sqrt(6 / (in_dim + hid_dim))
+
+    W = np.random.uniform(low=-x, high=x, size=(in_dim, hid_dim)).astype(np.float64)
+    b = np.random.uniform(low=-x, high=x, size=(hid_dim, )).astype(np.float64)
+
+    x = np.sqrt(6 / (hid_dim + out_dim))
+    U = np.random.uniform(low=-x, high=x, size=(hid_dim, out_dim)).astype(np.float64)
+    b_tag = np.random.uniform(low=-x, high=x, size=(out_dim,)).astype(np.float64)
+
     return [W, b, U, b_tag]
 
 if __name__ == '__main__':
