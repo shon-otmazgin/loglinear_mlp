@@ -81,7 +81,7 @@ if __name__ == '__main__':
     num_iterations = 10
     learning_rate = 1e-2
 
-    dims = [len(F2I), 16, len(L2I)]
+    dims = [len(F2I), 20, 30, 40, len(L2I)]
 
     params = mlpn.create_classifier(dims)
     trained_params = train_classifier(train_data, dev_data, num_iterations, learning_rate, params)
