@@ -11,13 +11,13 @@ def classifier_output(x, params):
     global Z, V
     x = np.array(x).reshape(-1, 1)
 
-    Z = []
+    Z = [np.zeros(1)]
     V = [x]
-    L = (len(params) / 2) - 1
+    L = int((len(params) / 2) - 1)
     for l in range(L):
         W, b = params[l*2], params[(l*2)+1]
 
-        Z_hid = np.dot(W.T, V[l-1]) + b.reshape(-1, 1)  # [hid_dim, 1]
+        Z_hid = np.dot(W.T, V[l]) + b.reshape(-1, 1)  # [hid_dim, 1]
         V_hid = tanh(Z_hid)                             # [hid_dim, 1]
 
         Z.append(Z_hid)
@@ -27,8 +27,8 @@ def classifier_output(x, params):
     Z_out = np.dot(W.T, V[L]) + b.reshape(-1, 1)  # [out_dim, 1]
     V_out = softmax(Z_out)                        # [out_dim, 1]
 
-    V.append(V_L)
-    Z.append(Z_L)
+    V.append(Z_out)
+    Z.append(V_out)
 
     return V_out
 
@@ -64,20 +64,20 @@ def loss_and_gradients(x, y, params):
     E[y] -= 1
     G = E.copy()    # [out_dim, 1]
 
-    L = (len(params) / 2) - 1
+    L = int((len(params) / 2) - 1)
     for l in range(L, -1, -1):
-        Z_hid, V_hid = Z[l-1], V[l-1]
+        Z_hid, V_hid = Z[l], V[l]
 
         gW = np.dot(G, V_hid.T).T  # [hid_dim, out_dim]
         gb = G
 
-        grads.append(gW)
-        grads.append(gb)
+        grads.insert(0, gb)
+        grads.insert(0, gW)
 
         E = np.dot(params[l*2], G)  # [hid_dim, 1]
         if l > 0:
             df = d_tanh(Z_hid)
-        G = df * E                  # element-wise [hid_dim, 1]
+            G = df * E                  # element-wise [hid_dim, 1]
 
     return loss, grads
 
@@ -114,16 +114,74 @@ def create_classifier(dims):
 
 
 if __name__ == '__main__':
-    dims = [300, 20, 30, 40, 5]
-    params = create_classifier(dims)
-    print([x.shape for x in params])
+    from grad_check import gradient_check
 
-    dims = [300, 5, 4]
-    params = create_classifier(dims)
-    print([x.shape for x in params])
+    W, b = create_classifier([3, 4])
 
-    dims = [300, 4]
-    params = create_classifier(dims)
-    print([x.shape for x in params])
+    def _loss_and_W_grad(W):
+        global b
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W, b])
+        return loss, grads[0]
+
+    def _loss_and_b_grad(b):
+        global W
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W, b])
+        return loss, grads[1]
+
+    for _ in range(10):
+        W = np.random.randn(W.shape[0], W.shape[1])
+        b = np.random.randn(b.shape[0])
+        gradient_check(_loss_and_b_grad, b)
+        gradient_check(_loss_and_W_grad, W)
+
+    W1, b1, W2, b2, W3, b3 = create_classifier([3, 20, 30, 4])
+
+    def _loss_and_W1_grad(W1):
+        global b1, W2, b2, W3, b3
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W1, b1, W2, b2, W3, b3])
+        return loss, grads[0]
+
+    def _loss_and_b1_grad(b1):
+        global W1, W2, b2, W3, b3
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W1, b1, W2, b2, W3, b3])
+        return loss, grads[1]
+
+    def _loss_and_W2_grad(W2):
+        global W1, b1, b2, W3, b3
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W1, b1, W2, b2, W3, b3])
+        return loss, grads[2]
+
+    def _loss_and_b2_grad(b2):
+        global W1, b1, W2, W3, b3
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W1, b1, W2, b2, W3, b3])
+        return loss, grads[3]
+
+    def _loss_and_W3_grad(W3):
+        global W1, b1, W2, b2, b3
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W1, b1, W2, b2, W3, b3])
+        return loss, grads[4]
+
+    def _loss_and_b3_grad(b3):
+        global W1, b1, W2, b2, W3
+        loss, grads = loss_and_gradients([1, 2, 3], 0, [W1, b1, W2, b2, W3, b3])
+        return loss, grads[5]
+
+    for _ in range(10):
+        W1 = np.random.randn(W1.shape[0], W1.shape[1])
+        b1 = np.random.randn(b1.shape[0])
+        W2 = np.random.randn(W2.shape[0], W2.shape[1])
+        b2 = np.random.randn(b2.shape[0])
+        W3 = np.random.randn(W3.shape[0], W3.shape[1])
+        b3 = np.random.randn(b3.shape[0])
+
+        gradient_check(_loss_and_b1_grad, b1)
+        gradient_check(_loss_and_W1_grad, W1)
+
+        gradient_check(_loss_and_b2_grad, b2)
+        gradient_check(_loss_and_W2_grad, W2)
+
+        gradient_check(_loss_and_b3_grad, b3)
+        gradient_check(_loss_and_W3_grad, W3)
+
 
 
