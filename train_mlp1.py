@@ -78,7 +78,7 @@ if __name__ == '__main__':
     from utils import TEST as test_data
     from utils import L2I, I2L, F2I
 
-    num_iterations = 7
+    num_iterations = 10
     learning_rate = 1e-2
     in_dim = len(F2I)
     hid_dim = 16

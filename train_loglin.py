@@ -74,20 +74,20 @@ if __name__ == '__main__':
     from utils import TEST as test_data
     from utils import L2I, I2L, F2I
 
-    num_iterations = 100
-    learning_rate = 1e-5
+    num_iterations = 10
+    learning_rate = 1e-2
     in_dim = len(F2I)
     out_dim = len(L2I)
 
     params = ll.create_classifier(in_dim, out_dim)
     trained_params = train_classifier(train_data, dev_data, num_iterations, learning_rate, params)
 
-    preds = []
-    for features in test_data:
-        x = feats_to_vec(features)
-        preds.append(ll.predict(x, trained_params))
-
-    with open('test.pred', 'w') as f:
-        for y_hat in preds:
-            f.write(f'{I2L[y_hat]}\n')
+    # preds = []
+    # for features in test_data:
+    #     x = feats_to_vec(features)
+    #     preds.append(ll.predict(x, trained_params))
+    #
+    # with open('test.pred', 'w') as f:
+    #     for y_hat in preds:
+    #         f.write(f'{I2L[y_hat]}\n')
 
