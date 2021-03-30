@@ -1,27 +1,36 @@
 import numpy as np
 
+from loglinear import softmax
+from mlp1 import tanh, d_tanh
+
 STUDENT={'name': 'YOUR NAME',
          'ID': 'YOUR ID NUMBER'}
+Z, V = [], []
 
 def classifier_output(x, params):
-    Z = [np.zeros(1)]
-    V = [X]
-    for l in range(1, self.L):
-        Z_l = np.dot(self.W[l], V[l - 1]) + self.b[l].reshape(-1, 1)
-        if l == 1:
-            V_l = sigmoid(Z_l)
-        else:
-            V_l = relu(Z_l)
-        V.append(V_l)
-        Z.append(Z_l)
-    Z_L = np.dot(self.W[self.L], V[self.L - 1]) + self.b[self.L].reshape(-1, 1)
-    V_L = softmax(Z_L)
+    global Z, V
+    x = np.array(x).reshape(-1, 1)
+
+    Z = []
+    V = [x]
+    L = (len(params) / 2) - 1
+    for l in range(L):
+        W, b = params[l*2], params[(l*2)+1]
+
+        Z_hid = np.dot(W.T, V[l-1]) + b.reshape(-1, 1)  # [hid_dim, 1]
+        V_hid = tanh(Z_hid)                             # [hid_dim, 1]
+
+        Z.append(Z_hid)
+        V.append(V_hid)
+
+    W, b = params[L*2], params[(L*2) + 1]
+    Z_out = np.dot(W.T, V[L]) + b.reshape(-1, 1)  # [out_dim, 1]
+    V_out = softmax(Z_out)                        # [out_dim, 1]
 
     V.append(V_L)
     Z.append(Z_L)
 
-    return V, Z
-    return probs
+    return V_out
 
 def predict(x, params):
     return np.argmax(classifier_output(x, params))
@@ -43,8 +52,35 @@ def loss_and_gradients(x, y, params):
     (of course, if we request a linear classifier (ie, params is of length 2),
     you should not have gW2 and gb2.)
     """
-    # YOU CODE HERE
-    return ...
+    global Z, V
+    x = np.array(x).reshape(-1, 1)
+
+    grads = []
+
+    probs = classifier_output(x, params)
+    loss = -np.log(probs[y])
+
+    E = probs       # [out_dim, 1]
+    E[y] -= 1
+    G = E.copy()    # [out_dim, 1]
+
+    L = (len(params) / 2) - 1
+    for l in range(L, -1, -1):
+        Z_hid, V_hid = Z[l-1], V[l-1]
+
+        gW = np.dot(G, V_hid.T).T  # [hid_dim, out_dim]
+        gb = G
+
+        grads.append(gW)
+        grads.append(gb)
+
+        E = np.dot(params[l*2], G)  # [hid_dim, 1]
+        if l > 0:
+            df = d_tanh(Z_hid)
+        G = df * E                  # element-wise [hid_dim, 1]
+
+    return loss, grads
+
 
 def create_classifier(dims):
     """
