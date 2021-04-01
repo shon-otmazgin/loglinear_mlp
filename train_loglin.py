@@ -63,8 +63,8 @@ if __name__ == '__main__':
     from utils import TEST as test_data
     from utils import I2L
 
-    num_iterations = 56
-    learning_rate = 1e-5
+    num_iterations = 10
+    learning_rate = 1e-3
     in_dim = len(F2I)
     out_dim = len(L2I)
 
