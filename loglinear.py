@@ -1,10 +1,8 @@
 import numpy as np
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
-         }
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
 
 def softmax(x):
     """
@@ -119,5 +117,3 @@ if __name__ == '__main__':
         gradient_check(_loss_and_b_grad, b)
         gradient_check(_loss_and_W_grad, W)
 
-
-    

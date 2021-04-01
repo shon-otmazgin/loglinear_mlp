@@ -6,10 +6,14 @@ from utils import L2I, F2I
 import loglinear as ll
 import itertools
 
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
+
 param_grid = {
     'epochs': [300],
-    'hid_dim': [32],
-    'lr': [1e-5],
+    'hid_dim': [32, 128],
+    'lr': [1e-3, 2e-3, 3e-3]
 }
 
 # Generate all combinations of parameters

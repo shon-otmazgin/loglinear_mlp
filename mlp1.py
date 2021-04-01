@@ -2,11 +2,9 @@ import numpy as np
 
 from loglinear import softmax
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
-         }
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
 
 tanh = lambda x: np.tanh(x)
 d_tanh = lambda x: 1.0 - np.tanh(x)**2

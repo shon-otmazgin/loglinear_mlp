@@ -3,11 +3,9 @@ import numpy as np
 from loglinear import softmax
 from mlp1 import tanh, d_tanh
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
-         }
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
 Z, V = [], []
 
 def classifier_output(x, params):

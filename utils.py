@@ -2,11 +2,9 @@
 # Use it if you want, or ignore it.
 import random
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
-         }
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
 
 def read_data(fname):
     data = []
@@ -22,9 +20,9 @@ def text_to_bigrams(text):
 def text_to_unigrams(text):
     return ["%s" % c for c in text]
 
-TRAIN = [(l,text_to_bigrams(t)) for l,t in read_data("train")]
-DEV   = [(l,text_to_bigrams(t)) for l,t in read_data("dev")]
-TEST   = [text_to_bigrams(t) for l,t in read_data("test")]
+TRAIN = [(l,text_to_unigrams(t)) for l,t in read_data("train")]
+DEV   = [(l,text_to_unigrams(t)) for l,t in read_data("dev")]
+TEST   = [text_to_unigrams(t) for l,t in read_data("test")]
 
 from collections import Counter
 fc = Counter()

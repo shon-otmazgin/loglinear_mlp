@@ -76,7 +76,7 @@ if __name__ == '__main__':
         x = feats_to_vec(features)
         preds.append(ll.predict(x, trained_params))
 
-    with open('test.pred', 'w') as f:
-        for y_hat in preds:
-            f.write(f'{I2L[y_hat]}\n')
+    # with open('test.pred', 'w') as f:
+    #     for y_hat in preds:
+    #         f.write(f'{I2L[y_hat]}\n')
 

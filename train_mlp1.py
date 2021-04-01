@@ -3,11 +3,9 @@ import random
 import numpy as np
 from utils import L2I, F2I
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
-         }
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
 
 def feats_to_vec(features):
     # YOUR CODE HERE.
@@ -97,7 +95,7 @@ if __name__ == '__main__':
         x = feats_to_vec(features)
         preds.append(mlp1.predict(x, trained_params))
 
-    with open('test.pred', 'w') as f:
-        for y_hat in preds:
-            f.write(f'{I2L[y_hat]}\n')
+    # with open('test.pred', 'w') as f:
+    #     for y_hat in preds:
+    #         f.write(f'{I2L[y_hat]}\n')
 
