@@ -1,6 +1,7 @@
 import mlp1
 import random
 import numpy as np
+from utils import L2I, F2I
 
 STUDENT = {'name': 'Royi Rassin',
            'ID': '311334734',
@@ -79,7 +80,8 @@ if __name__ == '__main__':
     from utils import TRAIN as train_data
     from utils import DEV as dev_data
     from utils import TEST as test_data
-    from utils import L2I, I2L, F2I
+    from utils import I2L
+
 
     num_iterations = 10
     learning_rate = 1e-2

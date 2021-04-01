@@ -61,7 +61,7 @@ if __name__ == '__main__':
     from utils import TRAIN as train_data
     from utils import DEV as dev_data
     from utils import TEST as test_data
-    from utils import L2I, I2L, F2I
+    from utils import I2L
 
     num_iterations = 56
     learning_rate = 1e-5
