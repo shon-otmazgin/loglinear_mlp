@@ -84,9 +84,9 @@ if __name__ == '__main__':
 
 
     num_iterations = 10
-    learning_rate = 1e-2
+    learning_rate = 1e-3
     in_dim = len(F2I)
-    hid_dim = 16
+    hid_dim = 32
     out_dim = len(L2I)
 
     params = mlp1.create_classifier(in_dim, hid_dim, out_dim)
