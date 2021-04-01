@@ -1,6 +1,13 @@
 # This file provides code which you may or may not find helpful.
 # Use it if you want, or ignore it.
 import random
+
+STUDENT = {'name': 'Royi Rassin',
+           'ID': '311334734',
+           'name_2': 'Shon Otzmagin',
+            'ID_2': "305394975"
+         }
+
 def read_data(fname):
     data = []
     with open(fname, 'r', encoding='UTF-8') as file:

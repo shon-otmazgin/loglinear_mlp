@@ -1,6 +1,12 @@
 import random
 import mlp1
 
+STUDENT = {'name': 'Royi Rassin',
+           'ID': '311334734',
+           'name_2': 'Shon Otzmagin',
+            'ID_2': "305394975"
+         }
+
 def train_classifier(train_data, num_iterations, learning_rate, params):
     for I in range(num_iterations):
         cum_loss = 0.0 # total loss in this iteration.
@@ -39,7 +45,7 @@ if __name__ == '__main__':
                 (1,[1,1])]
 
         num_iterations = 50
-        learning_rate = 1e-1
+        learning_rate = 1e-2
         in_dim = 2
         hid_dim = 4
         out_dim = 2

@@ -2,8 +2,11 @@ import loglinear as ll
 import random
 import numpy as np
 
-STUDENT={'name': 'YOUR NAME',
-         'ID': 'YOUR ID NUMBER'}
+STUDENT = {'name': 'Royi Rassin',
+           'ID': '311334734',
+           'name_2': 'Shon Otzmagin',
+            'ID_2': "305394975"
+         }
 
 def feats_to_vec(features):
     # YOUR CODE HERE.
@@ -48,6 +51,7 @@ def train_classifier(train_data, dev_data, num_iterations, learning_rate, params
             y = L2I[label]                  # convert the label to number if needed.
             loss, grads = ll.loss_and_gradients(x,y,params)
             cum_loss += loss
+
             # YOUR CODE HERE
             # update the parameters according to the gradients
             # and the learning rate.

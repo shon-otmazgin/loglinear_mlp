@@ -1,7 +1,10 @@
 import numpy as np
 
-STUDENT={'name': 'YOUR NAME',
-         'ID': 'YOUR ID NUMBER'}
+STUDENT = {'name': 'Royi Rassin',
+           'ID': '311334734',
+           'name_2': 'Shon Otzmagin',
+            'ID_2': "305394975"
+         }
 
 def softmax(x):
     """
@@ -16,6 +19,7 @@ def softmax(x):
     #
     # For numeric stability, use the identify you proved in Ex 2 Q1.
     x = x - np.max(x)
+
     return np.exp(x) / np.exp(x).sum(axis=0)
     
 
