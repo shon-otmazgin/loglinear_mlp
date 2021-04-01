@@ -1,10 +1,9 @@
 import random
 import mlp1
+import mlpn
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
          }
 
 def train_classifier(train_data, num_iterations, learning_rate, params):
@@ -28,6 +27,8 @@ def train_classifier(train_data, num_iterations, learning_rate, params):
         train_loss = cum_loss / len(train_data)
         train_accuracy = accuracy_on_dataset(train_data, params)
         print(I, train_loss, train_accuracy)
+        if train_accuracy == 1:
+            return params
     return params
 
 def accuracy_on_dataset(dataset, params):
@@ -44,10 +45,11 @@ if __name__ == '__main__':
                 (0,[1,0]),
                 (1,[1,1])]
 
-        num_iterations = 50
-        learning_rate = 1e-2
+        num_iterations = 100000
+        learning_rate = 5e-1
+
         in_dim = 2
-        hid_dim = 4
+        hid_dim = 2
         out_dim = 2
 
         params = mlp1.create_classifier(in_dim, hid_dim, out_dim)
