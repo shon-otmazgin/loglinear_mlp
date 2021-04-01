@@ -1,16 +1,13 @@
 import loglinear as ll
 import random
 import numpy as np
+from utils import F2I, L2I
 
-STUDENT = {'name': 'Royi Rassin',
-           'ID': '311334734',
-           'name_2': 'Shon Otzmagin',
-            'ID_2': "305394975"
-         }
+STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
+           'ID': '311334734, 305394975'
+           }
 
 def feats_to_vec(features):
-    # YOUR CODE HERE.
-    # Should return a numpy vector of features.
     arr = np.zeros(len(F2I))
     for f in features:
         try:
@@ -23,10 +20,6 @@ def feats_to_vec(features):
 def accuracy_on_dataset(dataset, params):
     good = bad = 0.0
     for label, features in dataset:
-        # YOUR CODE HERE
-        # Compute the accuracy (a scalar) of the current parameters
-        # on the dataset.
-        # accuracy is (correct_predictions / all_predictions)
         x = feats_to_vec(features)
         y_pred = ll.predict(x, params)
         good += 1 if y_pred==L2I[label] else 0
@@ -52,10 +45,6 @@ def train_classifier(train_data, dev_data, num_iterations, learning_rate, params
             loss, grads = ll.loss_and_gradients(x,y,params)
             cum_loss += loss
 
-            # YOUR CODE HERE
-            # update the parameters according to the gradients
-            # and the learning rate.
-
             W, b = params
             gW, gb = grads
             W_new = W - (learning_rate*gW)
@@ -69,29 +58,25 @@ def train_classifier(train_data, dev_data, num_iterations, learning_rate, params
     return params
 
 if __name__ == '__main__':
-    # YOUR CODE HERE
-    # write code to load the train and dev sets, set up whatever you need,
-    # and call train_classifier.
-    
     from utils import TRAIN as train_data
     from utils import DEV as dev_data
     from utils import TEST as test_data
     from utils import L2I, I2L, F2I
 
-    num_iterations = 10
-    learning_rate = 1e-2
+    num_iterations = 56
+    learning_rate = 1e-5
     in_dim = len(F2I)
     out_dim = len(L2I)
 
     params = ll.create_classifier(in_dim, out_dim)
     trained_params = train_classifier(train_data, dev_data, num_iterations, learning_rate, params)
 
-    # preds = []
-    # for features in test_data:
-    #     x = feats_to_vec(features)
-    #     preds.append(ll.predict(x, trained_params))
-    #
-    # with open('test.pred', 'w') as f:
-    #     for y_hat in preds:
-    #         f.write(f'{I2L[y_hat]}\n')
+    preds = []
+    for features in test_data:
+        x = feats_to_vec(features)
+        preds.append(ll.predict(x, trained_params))
+
+    with open('test.pred', 'w') as f:
+        for y_hat in preds:
+            f.write(f'{I2L[y_hat]}\n')
 
