@@ -3,8 +3,10 @@ import random
 import numpy as np
 from utils import F2I, L2I
 
-STUDENT = {'name': 'Royi Rassin, Shon Otzmagin',
-           'ID': '311334734, 305394975'
+STUDENT = {'name': 'Royi Rassin',
+           'ID': '311334734',
+           'name2': 'Shon Otzmagin',
+           'ID2': '305394975'
            }
 
 def feats_to_vec(features):
